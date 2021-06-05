@@ -5,20 +5,30 @@ Because
 ### Relevant files/folders:
 
 /index.js -- create store and Provide it to app
+
 /actions
+
 /actions/index.js -- export different actions that can be dispatched
+
 /reducers
-/reducer/counter.js -- counter reducer: INCREMENT, DECREMENT
-/reducer/isLogged.js -- isLogged reducer: SIGN_IN
+
+/reducer/counter.js -- counter reducer: INCREMENT(NUMBER), DECREMENT
+
+/reducer/isLogged.js -- isLogged reducer: SIGN_IN, SIGN_OUT
+
 /reducer/index.js -- combines both reducers using combineReducers from 'redux'
+
 /app.js -- use store
 
 
 ### Some vanilla implementation:
 
 // STORE -> The global state
+
 // ACTION -> Schema of potential behavior with/manipulation of store (what action you can do with the store data e.g. "Increment" to increment)
+
 // REDUCER -> Describes consequences of specific ACTION on the store; checks what action is performed, and dependant on which action performed, modify store
+
 // DISPATCH -> 'Dispatch' the action to the reducer -- perform the action of a specific ACTION
 
 // DISPATCH -> (specific) ACTION -> REDUCER (perform action)
