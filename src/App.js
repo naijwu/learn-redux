@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { increment, decrement, signIn, signOut } from './actions'
 
 function App() {
-  return (
+
+  // ACCESSING STORES
+  const counter = useSelector(state => state.counter); // state has access to entire Redux State
+  const isLogged = useSelector(state => state.logged);
+
+  const dispatch = useDispatch();
+
+  const toggleMembership = () => {
+    if(isLogged) {
+      dispatch(signOut());
+    } else {
+      dispatch(signIn());
+    }
+  }
+
+  return (  
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>learn-redux</h1>
+      <h2>Counter: {counter}</h2>
+
+      {/* Dispatch increment action when clicked */}
+      <button onClick={e=>dispatch(increment(5))} >+</button> 
+      <button onClick={e=>dispatch(decrement())} >-</button> 
+      
+      <button onClick={e=>toggleMembership()} >
+        {isLogged ? 'Log Out' : 'Log In'}
+      </button> 
+      
+      {(isLogged) && (
+        <h2>Logged In Eyes Only</h2>
+      )}
     </div>
   );
 }

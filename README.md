@@ -1,70 +1,65 @@
-# Getting Started with Create React App
+### Finally learn more about Redux (in React)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Because
 
-## Available Scripts
+### Relevant files/folders:
 
-In the project directory, you can run:
+/index.js -- create store and Provide it to app
+/actions
+/actions/index.js -- export different actions that can be dispatched
+/reducers
+/reducer/counter.js -- counter reducer: INCREMENT, DECREMENT
+/reducer/isLogged.js -- isLogged reducer: SIGN_IN
+/reducer/index.js -- combines both reducers using combineReducers from 'redux'
+/app.js -- use store
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Some vanilla implementation:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+// STORE -> The global state
+// ACTION -> Schema of potential behavior with/manipulation of store (what action you can do with the store data e.g. "Increment" to increment)
+// REDUCER -> Describes consequences of specific ACTION on the store; checks what action is performed, and dependant on which action performed, modify store
+// DISPATCH -> 'Dispatch' the action to the reducer -- perform the action of a specific ACTION
 
-### `npm test`
+// DISPATCH -> (specific) ACTION -> REDUCER (perform action)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+// STORE
+```
+import { createStore } from 'redux';
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+// ACTION (INCREMENT, DECREMENT) = function that returns an object
+const increment = () => {
+  return {
+    type: 'INCREMENT', // type, name; tomato, tomato
+  }
+}
+const decrement = () => {
+  return {
+    type: 'DECREMENT', // type, name; tomato, tomato
+  }
+}
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+// REDUCER = function that returns an object
+const counter = (state = 0, action) => {
+  switch(action.type) { // depending on action type, perform an action
+    case 'INCREMENT':
+      return state + 1;
+    case 'DECREMENT':
+      return state - 1;
+  }
+}
 
-### `npm run eject`
+// Implement store
+let store = createStore(counter);
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+store.subscribe(() => console.log(store.getState()));
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+// DISPATCH
+store.dispatch(increment());
+store.dispatch(increment());
+store.dispatch(increment());
+store.dispatch(increment());
+store.dispatch(decrement());
+```
